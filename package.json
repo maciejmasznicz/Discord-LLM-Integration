@@ -1,13 +1,14 @@
 {
-  "name": "discord_ollama_integration",
+  "name": "Discord-LLM-Integration",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Discord bot integrating large language models using Ollama.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "node deploy-commands.js",
+    "start": "node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Maciej Masznicz",
   "license": "ISC",
   "packageManager": "pnpm@10.23.0",
   "type": "module",

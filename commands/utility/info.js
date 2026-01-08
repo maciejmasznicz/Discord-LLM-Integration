@@ -20,7 +20,7 @@ const exampleEmbed = new EmbedBuilder()
     {
       name: "Source Code",
       value:
-        "This project is completely open source. You can find the code [here](https://github.com/maciejmasznicz).",
+        "This project is completely open source. You can find the code [here](https://github.com/maciejmasznicz/Discord-LLM-Integration).",
     }
   )
   .setTimestamp();
