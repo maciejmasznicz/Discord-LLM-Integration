@@ -31,6 +31,10 @@ export default {
     if (!conversations.has(userId)) {
       conversations.set(userId, [
         { role: "system", content: process.env.OLLAMA_SYSTEM_PROMPT },
+        {
+          role: "user",
+          content: "My name is " + interaction.user.displayName + ".",
+        },
       ]);
     }
 
@@ -51,6 +55,7 @@ export default {
     if (response.message.content.length > 2000) {
       response.message.content =
         response.message.content.substring(0, 2000 - suffix.length) + suffix;
+      history.push({ role: "system", content: suffix });
     }
 
     //pagination (future improvement)
