@@ -1,5 +1,5 @@
 {
-  "name": "Discord-LLM-Integration",
+  "name": "discord-llm-integration",
   "version": "1.0.0",
   "description": "A Discord bot integrating large language models using Ollama.",
   "main": "index.js",
