@@ -13,8 +13,13 @@ const exampleEmbed = new EmbedBuilder()
       inline: true,
     },
     {
-      name: "Selected LLM",
+      name: "LLM",
       value: process.env.OLLAMA_MODEL || "Not set",
+      inline: true,
+    },
+    {
+      name: "Vision LLM",
+      value: process.env.OLLAMA_VISION_MODEL || "Not set",
       inline: true,
     },
     {
