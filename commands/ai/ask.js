@@ -45,6 +45,16 @@ export default {
 
     history.push({ role: "assistant", content: response.message.content });
 
-    await interaction.editReply(response.message.content.substring(0, 2000));
+    const suffix =
+      "\n>>> Message had more than 2000 characters (discord limitations), so it was trimmed.";
+
+    if (response.message.content.length > 2000) {
+      response.message.content =
+        response.message.content.substring(0, 2000 - suffix.length) + suffix;
+    }
+
+    //pagination (future improvement)
+
+    await interaction.editReply(response.message.content);
   },
 };
