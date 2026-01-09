@@ -1,12 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { Ollama } from "ollama";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const client = new Ollama({
-  host: process.env.OLLAMA_HOST,
-});
+import { ollama } from "../../config/ollama.config.js";
 
 const conversations = new Map();
 
@@ -30,7 +23,7 @@ export default {
 
     if (!conversations.has(userId)) {
       conversations.set(userId, [
-        { role: "system", content: process.env.OLLAMA_SYSTEM_PROMPT },
+        { role: "system", content: ollama.systemPrompt },
         {
           role: "user",
           content: "My name is " + interaction.user.displayName + ".",
@@ -41,8 +34,8 @@ export default {
     const history = conversations.get(userId);
     history.push({ role: "user", content: prompt });
 
-    const response = await client.chat({
-      model: process.env.OLLAMA_MODEL,
+    const response = await ollama.client.chat({
+      model: ollama.model,
       messages: history,
       stream: false,
     });

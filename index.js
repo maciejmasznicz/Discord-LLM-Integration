@@ -5,16 +5,13 @@ import {
   Collection,
   MessageFlags,
 } from "discord.js";
-import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
+import { discord } from "./config/discord.config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// env setup
-dotenv.config();
 
 // init
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -75,4 +72,4 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 // token login
-client.login(process.env.DISCORD_TOKEN);
+client.login(discord.token);

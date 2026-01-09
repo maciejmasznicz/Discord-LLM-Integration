@@ -1,12 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { Ollama } from "ollama";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const client = new Ollama({
-  host: process.env.OLLAMA_HOST,
-});
+import { ollama } from "../../config/ollama.config.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -36,9 +29,14 @@ export default {
     const arrayBuffer = await imageResponse.arrayBuffer();
     const base64Image = Buffer.from(arrayBuffer).toString("base64");
 
-    const response = await client.chat({
-      model: process.env.OLLAMA_VISION_MODEL,
+    const response = await ollama.client.chat({
+      model: ollama.visionModel,
       messages: [
+        { role: "system", content: ollama.visionSystemPrompt },
+        {
+          role: "user",
+          content: "My name is " + interaction.user.displayName + ".",
+        },
         {
           role: "user",
           content: prompt,

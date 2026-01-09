@@ -2,16 +2,7 @@ import { REST, Routes } from "discord.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import dotenv from "dotenv";
-
-// env setup
-dotenv.config();
-
-const {
-  DISCORD_CLIENT_ID: clientId,
-  DISCORD_GUILD_ID: guildId,
-  DISCORD_TOKEN: token,
-} = process.env;
+import { discord } from "./config/discord.config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -42,7 +33,7 @@ for (const folder of commandFolders) {
 }
 
 // Construct and prepare an instance of the REST module
-const rest = new REST().setToken(token);
+const rest = new REST().setToken(discord.token);
 
 // and deploy your commands!
 (async () => {
@@ -53,7 +44,7 @@ const rest = new REST().setToken(token);
 
     // The put method is used to fully refresh all commands in the guild with the current set
     const data = await rest.put(
-      Routes.applicationGuildCommands(clientId, guildId),
+      Routes.applicationGuildCommands(discord.clientId, discord.guildId),
       { body: commands }
     );
 

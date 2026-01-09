@@ -1,7 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { ollama } from "../../config/ollama.config.js";
 
 const exampleEmbed = new EmbedBuilder()
   .setColor(0x0099ff)
@@ -9,17 +7,17 @@ const exampleEmbed = new EmbedBuilder()
   .addFields(
     {
       name: "Ollama Host",
-      value: process.env.OLLAMA_HOST || "Not set",
+      value: ollama.host,
       inline: true,
     },
     {
       name: "LLM",
-      value: process.env.OLLAMA_MODEL || "Not set",
+      value: ollama.model,
       inline: true,
     },
     {
       name: "Vision LLM",
-      value: process.env.OLLAMA_VISION_MODEL || "Not set",
+      value: ollama.visionModel,
       inline: true,
     },
     {
