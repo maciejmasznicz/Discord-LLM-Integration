@@ -10,7 +10,7 @@ const requiredEnv = [
   "MYSQL_HOST",
   "MYSQL_USER",
   "MYSQL_DATABASE",
-  //"MYSQL_PASSWORD", //comment this line if you use empty password
+  "MYSQL_PASSWORD", //comment this line if you use empty password
 ];
 
 const missingEnv = requiredEnv.filter((key) => !process.env[key]);
