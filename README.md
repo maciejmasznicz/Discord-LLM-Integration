@@ -1,4 +1,4 @@
-# A side project integrating Discord.JS with Ollama LLMs and and MySQL for saving chat history with AI Assistant.
+# A side project integrating Discord.JS with Ollama LLMs and MySQL for saving chat history with AI Assistant.
 
 ## Inside of a main folder create .env file where you provide exact variables:
 
