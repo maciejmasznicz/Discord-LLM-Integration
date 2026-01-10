@@ -1,3 +1,6 @@
+.DS_Store
+commands/ai/ask.js.old
+
 # Logs
 logs
 *.log

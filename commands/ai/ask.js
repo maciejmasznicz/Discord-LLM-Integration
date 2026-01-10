@@ -1,7 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
 import { ollama } from "../../config/ollama.config.js";
-
-const conversations = new Map();
+import Database from "../../database/mysql.config.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -21,18 +20,17 @@ export default {
     const prompt = interaction.options.getString("prompt");
     const userId = interaction.user.id;
 
-    if (!conversations.has(userId)) {
-      conversations.set(userId, [
-        { role: "system", content: ollama.systemPrompt },
-        {
-          role: "user",
-          content: "My name is " + interaction.user.displayName + ".",
-        },
-      ]);
+    if (!(await Database.checkUserExists(userId))) {
+      await Database.insertChatHistory(userId, "system", ollama.systemPrompt);
+      await Database.insertChatHistory(
+        userId,
+        "user",
+        "My name is " + interaction.user.displayName + "."
+      );
     }
 
-    const history = conversations.get(userId);
-    history.push({ role: "user", content: prompt });
+    await Database.insertChatHistory(userId, "user", prompt);
+    const history = await Database.getChatHistory(userId);
 
     const response = await ollama.client.chat({
       model: ollama.model,
@@ -40,7 +38,11 @@ export default {
       stream: false,
     });
 
-    history.push({ role: "assistant", content: response.message.content });
+    await Database.insertChatHistory(
+      userId,
+      "assistant",
+      response.message.content
+    );
 
     const suffix =
       "\n>>> Message had more than 2000 characters (discord limitations), so it was trimmed.";
@@ -48,10 +50,8 @@ export default {
     if (response.message.content.length > 2000) {
       response.message.content =
         response.message.content.substring(0, 2000 - suffix.length) + suffix;
-      history.push({ role: "system", content: suffix });
+      await Database.insertChatHistory(userId, "system", suffix);
     }
-
-    //pagination (future improvement)
 
     await interaction.editReply(response.message.content);
   },

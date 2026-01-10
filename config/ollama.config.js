@@ -1,7 +1,7 @@
 import { Ollama } from "ollama";
 import dotenv from "dotenv";
 
-dotenv.config({ encoding: "utf8", path: ".env", debug: true });
+dotenv.config({ encoding: "utf8", path: ".env", debug: false });
 
 //validation
 const requiredEnv = [

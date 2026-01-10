@@ -9,9 +9,12 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { discord } from "./config/discord.config.js";
+import Database from "./database/mysql.config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+Database.checkConnection();
 
 // init
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -73,3 +76,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 // token login
 client.login(discord.token);
+
+//db conenction close on exti
+process.on("SIGINT", async () => {
+  await Database.close();
+  process.exit(0);
+});
